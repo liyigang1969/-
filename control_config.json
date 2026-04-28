@@ -1,0 +1,9 @@
+﻿{
+    "mouse_control_enabled":  true,
+    "auto_dialogue_enabled":  true,
+    "keyboard_control_enabled":  true,
+    "execution_enabled":  true,
+    "planning_enabled":  true,
+    "memory_recall_enabled":  true,
+    "takeover_time":  "2026-04-18T06:54:47+08:00"
+}

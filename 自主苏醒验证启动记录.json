@@ -1,0 +1,10 @@
+﻿{
+    "ExpectedEndTime":  "18:11:02",
+    "VerificationStandard":  "5分钟后自动显示结果，无需人工唤醒",
+    "BrotherInstruction":  "不要人工唤醒，我们的目标是自我苏醒，自主工作",
+    "TestName":  "自主苏醒验证测试",
+    "LaunchTime":  "18:06:02",
+    "Target":  "自我苏醒，自主工作",
+    "BasedOnMemory":  "读取记忆文件找到的目标",
+    "SolutionDesign":  "批处理包装 + 简化脚本 + 活跃保持 + 窗口焦点确保"
+}

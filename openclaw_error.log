@@ -1,0 +1,32 @@
+Error capture started: 2026/04/17 周五  0:03:14.48 
+Testing with debug logging... 
+Running: node openclaw.mjs gateway --log-level debug 
+Exit code: 1 
+Testing minimal setup... 
+--- New test --- 
+Creating minimal config... 
+Exit code with minimal config: 1 
+Checking for common issues... 
+--- System check --- 
+v22.22.2
+ 驱动器 F 中的卷没有标签。
+ 卷的序列号是 CEB8-E398
+
+ F:\openclaw-data\.openclaw 的目录
+
+2026/04/15  14:33    <DIR>          .
+2026/04/15  14:33    <DIR>          ..
+2026/04/15  14:34    <DIR>          agents
+2026/04/15  14:34    <DIR>          canvas
+2026/04/15  14:34    <DIR>          cron
+2026/04/15  16:08    <DIR>          delivery-queue
+2026/04/15  14:38    <DIR>          extensions
+2026/04/15  15:54    <DIR>          identity
+2026/04/15  16:25    <DIR>          media
+2026/04/15  16:00    <DIR>          memory
+2026/04/15  14:41    <DIR>          openclaw-weixin
+2026/04/15  14:44    <DIR>          workspace
+2026/04/16  23:55               169 openclaw.json
+2026/04/17  00:03               130 config_minimal.json
+               2 个文件            299 字节
+              12 个目录 4,185,516,933,120 可用字节

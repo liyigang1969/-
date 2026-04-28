@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "created_at": "2026-04-17T20:14:41.804Z",
+  "sessions": [
+    {
+      "id": "session_1776456883345",
+      "started_at": "2026-04-17T20:14:43.345Z",
+      "status": "completed",
+      "ended_at": "2026-04-17T20:15:05.145Z",
+      "duration_minutes": 0,
+      "continue_commands": 3,
+      "tasks_completed": 3
+    }
+  ],
+  "statistics": {
+    "total_sessions": 1,
+    "total_continue_commands": 3,
+    "average_session_duration_minutes": 0
+  }
+}

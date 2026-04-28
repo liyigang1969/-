@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>OpenClaw Test Tool</title>
+<HTA:APPLICATION ID="OpenClawTest" APPLICATIONNAME="OpenClaw Test" BORDER="thin" BORDERSTYLE="normal" CAPTION="yes" ICON="shell32.dll,21" MAXIMIZEBUTTON="no" MINIMIZEBUTTON="yes" SHOWINTASKBAR="yes" SINGLEINSTANCE="yes" SYSMENU="yes" WINDOWSTATE="normal">
+<style>
+body { font-family: Segoe UI, Arial; margin: 20px; background: #f0f0f0; }
+.container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+h1 { color: #2c3e50; }
+button { background: #3498db; color: white; border: none; padding: 10px 20px; margin: 5px; border-radius: 4px; cursor: pointer; }
+button:hover { background: #2980b9; }
+.output { background: #2c3e50; color: #ecf0f1; padding: 10px; margin-top: 10px; border-radius: 4px; font-family: Consolas, monospace; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>OpenClaw Test Tool</h1>
+<p>If batch files flash and close, use this tool to test</p>
+<hr>
+<button onclick="testNodeJS()">Test Node.js</button>
+<button onclick="testFDrive()">Test F Drive</button>
+<button onclick="testOpenClaw()">Test OpenClaw</button>
+<button onclick="runBatch()">Run Batch File</button>
+<hr>
+<div id="output" class="output">Click button to start test...</div>
+</div>
+
+<script language="VBScript">
+Dim shell, fso
+Set shell = CreateObject("WScript.Shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
+
+Sub testNodeJS()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Testing Node.js..."
+    Dim result
+    result = shell.Run("cmd /c C:\nodejs\node.exe --version", 0, True)
+    If result = 0 Then
+        document.getElementById("output").innerHTML = "OK Node.js test passed"
+    Else
+        document.getElementById("output").innerHTML = "ERROR Node.js test failed"
+    End If
+End Sub
+
+Sub testFDrive()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Testing F drive..."
+    If fso.FolderExists("F:\openclaw-data\.openclaw") Then
+        document.getElementById("output").innerHTML = "OK F drive data directory exists"
+    Else
+        document.getElementById("output").innerHTML = "ERROR F drive data directory not found"
+    End If
+End Sub
+
+Sub testOpenClaw()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Testing OpenClaw..."
+    Dim cmd
+    cmd = "cmd /k cd /d ""C:\Users\lenovo\AppData\Local\Temp\openclaw-usb\openclaw"" && C:\nodejs\node.exe openclaw.mjs --version && pause"
+    shell.Run cmd, 1, False
+End Sub
+
+Sub runBatch()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Running batch file..."
+    shell.Run "cmd /k E:\openclaw-data\.openclaw\workspace\stay_open.bat", 1, False
+End Sub
+</script>
+</body>
+</html>

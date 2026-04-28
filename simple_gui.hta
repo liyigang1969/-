@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>OpenClaw Simple Launcher</title>
+<HTA:APPLICATION ID="SimpleLauncher" APPLICATIONNAME="OpenClaw" BORDER="thin" CAPTION="yes">
+<style>
+body { font-family: Arial; margin: 20px; }
+h1 { color: #2c3e50; }
+button { background: #3498db; color: white; border: none; padding: 10px 20px; margin: 5px; cursor: pointer; }
+button:hover { background: #2980b9; }
+.output { background: #f0f0f0; padding: 10px; margin-top: 10px; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+<h1>OpenClaw Simple Launcher</h1>
+<p>Click buttons to run commands</p>
+
+<button onclick="runTestNode()">Test Node.js</button>
+<button onclick="runTestFDrive()">Test F Drive</button>
+<button onclick="runStartOpenClaw()">Start OpenClaw</button>
+<button onclick="runStartPort3003()">Start on Port 3003</button>
+<button onclick="runKillProcess()">Kill Processes</button>
+
+<div id="output" class="output">Ready</div>
+
+<script>
+function runTestNode() {
+    document.getElementById("output").innerHTML = "Testing Node.js...";
+    var shell = new ActiveXObject("WScript.Shell");
+    shell.Run("cmd /k C:\\nodejs\\node.exe --version && pause", 1, false);
+}
+
+function runTestFDrive() {
+    document.getElementById("output").innerHTML = "Testing F drive...";
+    var shell = new ActiveXObject("WScript.Shell");
+    shell.Run("cmd /k dir F:\\openclaw-data\\.openclaw && pause", 1, false);
+}
+
+function runStartOpenClaw() {
+    document.getElementById("output").innerHTML = "Starting OpenClaw...";
+    var shell = new ActiveXObject("WScript.Shell");
+    var cmd = "cmd /k set OPENCLAW_DATA=F:\\openclaw-data\\.openclaw && set OPENCLAW_STATE_DIR=F:\\openclaw-data\\.openclaw && cd /d \"C:\\Users\\lenovo\\AppData\\Local\\Temp\\openclaw-usb\\openclaw\" && C:\\nodejs\\node.exe openclaw.mjs gateway --port 3003 --log-level info && pause";
+    shell.Run(cmd, 1, false);
+}
+
+function runStartPort3003() {
+    document.getElementById("output").innerHTML = "Starting on port 3003...";
+    var shell = new ActiveXObject("WScript.Shell");
+    var cmd = "cmd /k set OPENCLAW_DATA=F:\\openclaw-data\\.openclaw && set OPENCLAW_STATE_DIR=F:\\openclaw-data\\.openclaw && cd /d \"C:\\Users\\lenovo\\AppData\\Local\\Temp\\openclaw-usb\\openclaw\" && C:\\nodejs\\node.exe openclaw.mjs gateway --port 3003 && pause";
+    shell.Run(cmd, 1, false);
+}
+
+function runKillProcess() {
+    document.getElementById("output").innerHTML = "Killing OpenClaw processes...";
+    var shell = new ActiveXObject("WScript.Shell");
+    shell.Run("cmd /k taskkill /F /IM node.exe 2>nul && echo Processes killed && pause", 1, false);
+}
+</script>
+</body>
+</html>

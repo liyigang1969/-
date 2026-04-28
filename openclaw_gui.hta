@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>OpenClaw GUI Launcher</title>
+<HTA:APPLICATION ID="OpenClawLauncher" APPLICATIONNAME="OpenClaw Launcher" BORDER="thin" CAPTION="yes" ICON="shell32.dll,21" MAXIMIZEBUTTON="no" MINIMIZEBUTTON="yes" SHOWINTASKBAR="yes" SINGLEINSTANCE="yes" SYSMENU="yes" WINDOWSTATE="normal">
+<style>
+body { font-family: Segoe UI, Arial; margin: 20px; background: #f0f0f0; }
+.container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 800px; margin: auto; }
+h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+button { background: #3498db; color: white; border: none; padding: 12px 24px; margin: 8px; border-radius: 4px; cursor: pointer; font-size: 14px; min-width: 180px; }
+button:hover { background: #2980b9; }
+button.success { background: #27ae60; }
+button.success:hover { background: #219653; }
+button.warning { background: #e67e22; }
+button.warning:hover { background: #d35400; }
+.output { background: #2c3e50; color: #ecf0f1; padding: 15px; margin-top: 20px; border-radius: 4px; font-family: Consolas, monospace; white-space: pre-wrap; max-height: 300px; overflow-y: auto; }
+.status { padding: 10px; margin: 10px 0; border-radius: 4px; }
+.status.ok { background: #d5f4e6; color: #27ae60; border: 1px solid #27ae60; }
+.status.error { background: #fadbd8; color: #e74c3c; border: 1px solid #e74c3c; }
+.status.info { background: #d6eaf8; color: #3498db; border: 1px solid #3498db; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🦞 OpenClaw Launcher</h1>
+<p>Graphical interface to avoid batch file flash issues</p>
+
+<div class="status info">
+<strong>Current Status:</strong> Batch files are flashing and closing. Using GUI instead.
+</div>
+
+<hr>
+
+<h2>Step 1: Prepare Environment</h2>
+<button onclick="testNodeJS()">Test Node.js</button>
+<button onclick="testFDrive()">Test F Drive</button>
+<button onclick="copyOpenClaw()">Copy OpenClaw to F Drive</button>
+
+<h2>Step 2: Launch OpenClaw</h2>
+<button onclick="startOpenClaw()" class="success">Start OpenClaw Gateway</button>
+<button onclick="startWithPort3003()" class="success">Start on Port 3003</button>
+<button onclick="startWithCleanConfig()" class="warning">Start with Clean Config</button>
+
+<h2>Step 3: Utilities</h2>
+<button onclick="killOpenClaw()">Kill Running OpenClaw</button>
+<button onclick="checkPorts()">Check Used Ports</button>
+<button onclick="showConfig()">Show Configuration</button>
+
+<hr>
+
+<div id="output" class="output">Ready. Click buttons to perform actions.</div>
+
+<div id="status" class="status"></div>
+</div>
+
+<script language="VBScript">
+Dim shell, fso
+Set shell = CreateObject("WScript.Shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
+
+Sub updateStatus(msg, msgType)
+    Dim statusDiv
+    Set statusDiv = document.getElementById("status")
+    statusDiv.innerHTML = msg
+    statusDiv.className = "status " & msgType
+End Sub
+
+Sub testNodeJS()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Testing Node.js..."
+    Dim result
+    result = shell.Run("cmd /c C:\nodejs\node.exe --version", 0, True)
+    If result = 0 Then
+        updateStatus "✅ Node.js is working", "ok"
+        document.getElementById("output").innerHTML = "Node.js test passed"
+    Else
+        updateStatus "❌ Node.js test failed", "error"
+        document.getElementById("output").innerHTML = "Node.js test failed"
+    End If
+End Sub
+
+Sub testFDrive()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Testing F drive access..."
+    If fso.FolderExists("F:\openclaw-data\.openclaw") Then
+        updateStatus "✅ F drive data directory exists", "ok"
+        document.getElementById("output").innerHTML = "F drive test passed"
+    Else
+        updateStatus "❌ F drive data directory not found", "error"
+        document.getElementById("output").innerHTML = "F drive test failed"
+    End If
+End Sub
+
+Sub copyOpenClaw()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Copying OpenClaw to F drive..."
+    
+    If Not fso.FolderExists("F:\OpenClaw_Fresh") Then
+        fso.CreateFolder("F:\OpenClaw_Fresh")
+    End If
+    
+    shell.Run "cmd /c xcopy ""C:\Users\lenovo\AppData\Local\Temp\openclaw-usb\openclaw\*"" ""F:\OpenClaw_Fresh"" /E /I /H /Y /Q", 0, True
+    
+    If fso.FileExists("F:\OpenClaw_Fresh\openclaw.mjs") Then
+        updateStatus "✅ OpenClaw copied to F drive", "ok"
+        document.getElementById("output").innerHTML = "OpenClaw successfully copied to F:\OpenClaw_Fresh"
+    Else
+        updateStatus "❌ Copy failed", "error"
+        document.getElementById("output").innerHTML = "Copy failed"
+    End If
+End Sub
+
+Sub startOpenClaw()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Starting OpenClaw Gateway..."
+    updateStatus "Starting OpenClaw... Watch for gateway token", "info"
+    
+    Dim cmd
+    cmd = "cmd /k set OPENCLAW_DATA=F:\openclaw-data\.openclaw && set OPENCLAW_STATE_DIR=F:\openclaw-data\.openclaw && cd /d ""F:\OpenClaw_Fresh"" && C:\nodejs\node.exe openclaw.mjs gateway --port 3000 --log-level info && pause"
+    shell.Run cmd, 1, False
+End Sub
+
+Sub startWithPort3003()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Starting OpenClaw on port 3003..."
+    updateStatus "Starting on port 3003...", "info"
+    
+    Dim cmd
+    cmd = "cmd /k set OPENCLAW_DATA=F:\openclaw-data\.openclaw && set OPENCLAW_STATE_DIR=F:\openclaw-data\.openclaw && cd /d ""F:\OpenClaw_Fresh"" && C:\nodejs\node.exe openclaw.mjs gateway --port 3003 --log-level info && pause"
+    shell.Run cmd, 1, False
+End Sub
+
+Sub startWithCleanConfig()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Creating clean config and starting..."
+    
+    ' Create clean config
+    Dim configFile, configContent
+    Set configFile = fso.CreateTextFile("F:\openclaw-data\.openclaw\openclaw_clean.json", True)
+    configContent = "{""gateway"":{""mode"":""local"",""host"":""0.0.0.0"",""port"":3004}}"
+    configFile.Write configContent
+    configFile.Close
+    
+    updateStatus "Clean config created. Starting...", "info"
+    
+    Dim cmd
+    cmd = "cmd /k set OPENCLAW_DATA=F:\openclaw-data\.openclaw && set OPENCLAW_CONFIG_PATH=F:\openclaw-data\.openclaw\openclaw_clean.json && cd /d ""F:\OpenClaw_Fresh"" && C:\nodejs\node.exe openclaw.mjs gateway --log-level info && pause"
+    shell.Run cmd, 1, False
+End Sub
+
+Sub killOpenClaw()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Killing OpenClaw processes..."
+    shell.Run "taskkill /F /IM node.exe 2>nul", 0, True
+    updateStatus "OpenClaw processes killed", "ok"
+    document.getElementById("output").innerHTML = "OpenClaw processes terminated"
+End Sub
+
+Sub checkPorts()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Checking used ports..."
+    shell.Run "cmd /k netstat -ano | findstr :3000 && netstat -ano | findstr :3003 && netstat -ano | findstr :18789 && pause", 1, False
+End Sub
+
+Sub showConfig()
+    On Error Resume Next
+    document.getElementById("output").innerHTML = "Showing configuration..."
+    
+    If fso.FileExists("F:\openclaw-data\.openclaw\openclaw.json") Then
+        Dim file, content
+        Set file = fso.OpenTextFile("F:\openclaw-data\.openclaw\openclaw.json", 1)
+        content = file.ReadAll
+        file.Close
+        document.getElementById("output").innerHTML = "Current config:\n" & content
+    Else
+        document.getElementById("output").innerHTML = "No configuration file found"
+    End If
+End Sub
+</script>
+</body>
+</html>

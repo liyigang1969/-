@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "created_at": "2026-04-18T04:03:00+08:00",
+  "last_updated": "2026-04-18T04:03:00+08:00",
+  "logs": [
+    {
+      "id": "log_001",
+      "filename": "2026-04-18_0403_init.md",
+      "task_id": "init_system",
+      "title": "系统初始化",
+      "created_at": "2026-04-18T04:03:00+08:00",
+      "word_count": 764,
+      "tags": ["系统设计", "初始化", "工作流程"],
+      "summary": "创建持续工作自动化系统的思考和设计过程"
+    },
+    {
+      "id": "log_002",
+      "filename": "2026-04-18_0403_thinking_logs.md",
+      "task_id": "create_thinking_logs",
+      "title": "创建思考日志系统",
+      "created_at": "2026-04-18T04:03:00+08:00",
+      "word_count": 1142,
+      "tags": ["日志系统", "设计", "知识管理"],
+      "summary": "设计和完善思考日志系统的决策过程"
+    }
+  ],
+  "statistics": {
+    "total_logs": 2,
+    "total_words": 1906,
+    "earliest_log": "2026-04-18T04:03:00+08:00",
+    "latest_log": "2026-04-18T04:03:00+08:00",
+    "average_words_per_log": 953
+  },
+  "search_index": {
+    "by_task_id": {
+      "init_system": ["log_001"],
+      "create_thinking_logs": ["log_002"]
+    },
+    "by_tag": {
+      "系统设计": ["log_001"],
+      "初始化": ["log_001"],
+      "工作流程": ["log_001"],
+      "日志系统": ["log_002"],
+      "设计": ["log_002"],
+      "知识管理": ["log_002"]
+    },
+    "by_date": {
+      "2026-04-18": ["log_001", "log_002"]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+﻿{
+    "cycle_duration_minutes":  10,
+    "sub_cycles":  [
+                       {
+                           "next_time":  "06:57",
+                           "name":  "dialogue",
+                           "interval_minutes":  3
+                       },
+                       {
+                           "next_time":  "07:04",
+                           "name":  "memory",
+                           "interval_minutes":  10
+                       },
+                       {
+                           "next_time":  "07:04",
+                           "name":  "planning",
+                           "interval_minutes":  10
+                       }
+                   ],
+    "status":  "running",
+    "cycle_number":  1,
+    "start_time":  "2026-04-18T06:54:47+08:00"
+}

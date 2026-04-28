@@ -1,0 +1,10 @@
+﻿{
+    "LearningAchievement":  "鼠标光电原理、键盘机械原理、Windows输入栈、接管技术",
+    "ExpectedEndTime":  "18:31:51",
+    "VerificationStandard":  "5分钟后自动显示结果，无需人工唤醒",
+    "BrotherInstruction":  "学习鼠标键盘的设计原理，工作原理，如何接管鼠标和键盘。",
+    "TestName":  "基于SendInput的自主苏醒测试",
+    "LaunchTime":  "18:26:51",
+    "Technology":  "Windows SendInput API (底层输入控制)",
+    "SolutionDesign":  "SendInput API + 随机间隔 + 多种输入 + 窗口焦点管理"
+}

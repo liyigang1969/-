@@ -1,0 +1,18 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Console]
+"QuickEdit"=dword:00000001
+"InsertMode"=dword:00000001
+"ScreenBufferSize"=dword:232900a
+"WindowSize"=dword:002300a0
+"FontSize"=dword:000c0010
+"FontFamily"=dword:00000036
+"FontWeight"=dword:00000190
+"FaceName"="Consolas"
+"CursorSize"=dword:00000019
+"HistoryNoDup"=dword:00000000
+"ForceV2"=dword:00000001
+
+[HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe]
+"QuickEdit"=dword:00000001
+"InsertMode"=dword:00000001

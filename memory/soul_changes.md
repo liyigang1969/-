@@ -1,0 +1,2 @@
+﻿# EvoClaw SOUL Change Log
+

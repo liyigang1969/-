@@ -1,0 +1,8 @@
+﻿{
+    "ScriptVersion":  "改进版 (解决不苏醒问题)",
+    "Purpose":  "验证改进版是否解决不苏醒问题，展现元灵专业性",
+    "ExpectedEndTime":  "17:52:45",
+    "TestName":  "改进版防中断专业测试",
+    "Monitor":  "老刚头兄弟",
+    "StartTime":  "17:47:45"
+}

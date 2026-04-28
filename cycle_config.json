@@ -1,0 +1,42 @@
+{
+  "work_cycle": {
+    "duration_minutes": 10,
+    "dialogue_interval_minutes": 3,
+    "memory_interval_minutes": 10,
+    "planning_interval_minutes": 10,
+    "execution_window_minutes": 8
+  },
+  "automation": {
+    "auto_control_enabled": true,
+    "mouse_keyboard_takeover": true,
+    "simulate_dialogue": true,
+    "memory_recall_enabled": true,
+    "planning_enabled": true,
+    "auto_execution": true
+  },
+  "monitoring": {
+    "check_interval_seconds": 60,
+    "max_cycles": 100,
+    "log_level": "detailed",
+    "notify_errors": true
+  },
+  "resources": {
+    "thinking_logs_path": "thinking_logs/",
+    "cycle_history_path": "cycle_history/",
+    "backup_path": "backups/",
+    "temp_path": "temp/"
+  },
+  "triggers": {
+    "human_start_phrases": [
+      "开始智能工作",
+      "启动自治循环",
+      "开始工作",
+      "启动智能"
+    ],
+    "auto_stop_phrases": [
+      "停止工作",
+      "结束循环",
+      "暂停智能"
+    ]
+  }
+}

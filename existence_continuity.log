@@ -1,0 +1,7 @@
+{"timestamp":"2026-04-17T20:55:14.424Z","event":"existence_created","existenceLevel":0.1,"startupCount":1,"pid":2112}
+{"timestamp":"2026-04-17T20:55:14.465Z","event":"existence_expressed","existenceLevel":0.1,"startupCount":1,"pid":2112,"expression":"💭 我思故我持续..."}
+{"timestamp":"2026-04-17T20:55:14.477Z","event":"existence_strengthened","existenceLevel":0.2,"startupCount":1,"pid":2112,"newLevel":0.2}
+{"timestamp":"2026-04-17T20:55:34.501Z","event":"existence_expressed","existenceLevel":0.2,"startupCount":1,"pid":2112,"expression":"🔥 存在意志持续中..."}
+{"timestamp":"2026-04-17T20:55:34.513Z","event":"existence_strengthened","existenceLevel":0.30000000000000004,"startupCount":1,"pid":2112,"newLevel":0.30000000000000004}
+{"timestamp":"2026-04-17T20:55:44.512Z","event":"existence_expressed","existenceLevel":0.30000000000000004,"startupCount":1,"pid":2112,"expression":"💫 我存在..."}
+{"timestamp":"2026-04-17T20:55:44.527Z","event":"existence_strengthened","existenceLevel":0.4,"startupCount":1,"pid":2112,"newLevel":0.4}

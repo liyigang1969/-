@@ -1,0 +1,19 @@
+﻿{
+    "created_at":  "2026-04-18T05:51:02+08:00",
+    "bypass_obstacles":  [
+                             "manual_dialog_restore",
+                             "external_trigger",
+                             "scheduled_task_start"
+                         ],
+    "auto_actions":  [
+                         "check_work_queue_on_startup",
+                         "continue_interrupted_tasks",
+                         "update_system_state",
+                         "log_automation_process"
+                     ],
+    "verification_methods":  [
+                                 "restart_openclaw_and_observe",
+                                 "check_if_auto_start_working",
+                                 "verify_no_manual_intervention"
+                             ]
+}

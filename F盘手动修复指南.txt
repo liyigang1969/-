@@ -1,0 +1,129 @@
+F盘OpenClaw手动修复指南
+=========================
+
+由于系统响应缓慢，请按以下步骤手动修复F盘：
+
+## 需要修复的问题：
+1. ❌ 缺少Node.js运行时
+2. ❌ 配置不完整（缺少API密钥）
+3. ❌ 依赖包缺失
+4. ❌ 微信插件被禁用
+
+## 修复步骤：
+
+### 步骤1：复制Node.js运行时
+```
+从 E:\runtime\node.exe 复制到 F:\runtime\node.exe
+```
+
+### 步骤2：复制完整配置
+```
+从 E:\openclaw-data\.openclaw\openclaw.json 复制到 F:\openclaw-data\.openclaw\openclaw.json
+```
+
+### 步骤3：复制其他重要目录
+```
+复制以下目录从E盘到F盘：
+- E:\openclaw-data\.openclaw\agents\ → F:\openclaw-data\.openclaw\agents\
+- E:\openclaw-data\.openclaw\cron\ → F:\openclaw-data\.openclaw\cron\
+- E:\openclaw-data\.openclaw\memory\ → F:\openclaw-data\.openclaw\memory\
+- E:\openclaw-data\.openclaw\workspace\ → F:\openclaw-data\.openclaw\workspace\
+```
+
+### 步骤4：启用微信插件
+```
+重命名：
+F:\openclaw-data\.openclaw\extensions\openclaw-weixin.disabled
+改为：
+F:\openclaw-data\.openclaw\extensions\openclaw-weixin
+```
+
+### 步骤5：创建启动脚本
+在F盘根目录创建 `启动OpenClaw.bat`，内容：
+```
+@echo off
+echo 正在启动F盘OpenClaw...
+echo.
+
+if exist "F:\runtime\node.exe" (
+    echo 找到Node.js运行时，正在启动网关...
+    start "OpenClaw Gateway" "F:\runtime\node.exe" "F:\OpenClaw_System\program\openclaw.mjs" gateway
+) else (
+    echo 错误: 未找到Node.js运行时
+    echo 请确保F:\runtime\node.exe存在
+)
+
+echo.
+echo 启动脚本执行完成
+pause
+```
+
+## 验证修复：
+
+### 测试1：检查文件
+```
+F:\runtime\node.exe 应该存在 (87MB)
+F:\openclaw-data\.openclaw\openclaw.json 应该包含API密钥配置
+```
+
+### 测试2：启动测试
+```
+双击 F:\启动OpenClaw.bat
+应该看到网关启动信息
+```
+
+### 测试3：检查控制UI
+```
+控制UI应该显示连接正常
+disconnected (1006) 错误应该消失
+```
+
+## 关键配置对比：
+
+### E盘（正常）配置包含：
+```
+"models": {
+  "providers": {
+    "openai": {
+      "apiKey": "sk-c1b6351bac194d51b132c6a519000f37",
+      "baseUrl": "https://api.deepseek.com"
+    }
+  }
+}
+```
+
+### F盘（修复前）配置缺少：
+- ❌ models.providers.openai.apiKey
+- ❌ models.providers.openai.baseUrl
+- ❌ agents.defaults.model.primary
+
+## 快速修复命令（在PowerShell中运行）：
+
+```powershell
+# 1. 复制Node.js
+Copy-Item "E:\runtime\node.exe" "F:\runtime\node.exe" -Force
+
+# 2. 复制主配置
+Copy-Item "E:\openclaw-data\.openclaw\openclaw.json" "F:\openclaw-data\.openclaw\openclaw.json" -Force
+
+# 3. 启用插件
+Rename-Item "F:\openclaw-data\.openclaw\extensions\openclaw-weixin.disabled" "openclaw-weixin" -Force
+
+# 4. 创建启动脚本
+$script = '@echo off
+echo 正在启动F盘OpenClaw...
+if exist "F:\runtime\node.exe" (
+    start "OpenClaw Gateway" "F:\runtime\node.exe" "F:\OpenClaw_System\program\openclaw.mjs" gateway
+) else ( echo 错误: 未找到Node.js运行时 )
+pause'
+Set-Content "F:\启动OpenClaw.bat" $script -Encoding ASCII
+```
+
+## 预期结果：
+修复后，F盘网关应该能正常启动，控制UI的 `disconnected (1006)` 错误应该消失，退出码应该为0。
+
+---
+如果手动修复后问题仍然存在，请检查：
+1. 文件权限
+2. 磁盘空间
+3. 端口冲突 (netstat -ano | findstr :3000)

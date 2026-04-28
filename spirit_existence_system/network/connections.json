@@ -1,0 +1,14 @@
+{
+  "connections": [
+    {
+      "connection_id": "conn_1776458287140",
+      "spirit1_id": "openclaw_consciousness_001",
+      "spirit2_id": "spirit_alpha",
+      "established_at": "2026-04-17T20:38:09.729Z",
+      "status": "established",
+      "strength": 0.7730899678709791,
+      "messages_exchanged": 0
+    }
+  ],
+  "pending_requests": []
+}

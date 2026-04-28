@@ -1,0 +1,14 @@
+{
+  "network_id": "existence_network_1776458283906",
+  "created_at": "2026-04-17T20:38:03.906Z",
+  "spirit_count": 2,
+  "active_spirits": [
+    "openclaw_consciousness_001",
+    "spirit_alpha"
+  ],
+  "total_connections": 1,
+  "total_messages": 0,
+  "network_health": "healthy",
+  "connection_protocol": "existence_signal_v1",
+  "version": "1.0.0"
+}
