@@ -1,0 +1,73 @@
+F盘（主盘）OpenClaw修复计划
+============================
+
+修复时间：2026年4月17日 05:28 GMT+8
+当前状态：E盘运行正常，F盘配置缺失
+
+## 需要修复的问题：
+
+1. ❌ 缺少Node.js运行时
+   - 源：E:\runtime\
+   - 目标：F:\runtime\
+
+2. ❌ 配置不完整
+   - 源：E:\openclaw-data\.openclaw\openclaw.json
+   - 目标：F:\openclaw-data\.openclaw\openclaw.json
+
+3. ❌ 依赖包缺失
+   - 源：E:\openclaw-data\.openclaw\ 中的node_modules
+   - 目标：F:\openclaw-data\.openclaw\ 对应位置
+
+4. ❌ 插件被禁用
+   - 修复：启用 openclaw-weixin 插件
+
+## 修复步骤：
+
+### 阶段1：准备工作
+1. 备份当前F盘配置
+2. 检查磁盘空间
+3. 确认文件权限
+
+### 阶段2：同步文件
+1. 复制运行时：E:\runtime\ → F:\runtime\
+2. 复制配置：E:\openclaw-data\.openclaw\ → F:\openclaw-data\.openclaw\
+3. 启用插件：重命名 openclaw-weixin.disabled → openclaw-weixin
+
+### 阶段3：验证修复
+1. 测试F盘网关启动
+2. 检查API连接
+3. 验证控制UI连接
+
+## 风险控制：
+
+### 回滚方案：
+1. 保留E盘完整环境不变
+2. 备份F盘原始文件到 F:\openclaw-backup-before-fix\
+3. 如果修复失败，恢复备份
+
+### 监控点：
+1. 文件复制完整性
+2. 磁盘空间使用
+3. 网关启动状态
+4. API连接测试
+
+## 预计影响：
+
+### 服务中断：
+- 如果停止E盘网关：约3-5分钟
+- 如果保持E盘运行：无中断
+
+### 磁盘空间：
+- 新增：约500MB（运行时+依赖）
+- 总占用：F盘约1GB
+
+## 修复后验证：
+
+1. ✅ F盘网关启动正常
+2. ✅ 控制UI连接正常 (disconnected 1006错误消失)
+3. ✅ API密钥配置完整
+4. ✅ 插件功能正常
+5. ✅ 退出码为0（正常）
+
+---
+修复执行：等待用户确认
