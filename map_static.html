@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🦞 附近 · 荆州市</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI',sans-serif;background:#0b0e17;color:#e0e4ec;height:100vh;display:flex;flex-direction:column}
+.header{padding:16px 20px 12px;background:#131827;display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:18px;font-weight:600;color:#7eb8ff}
+.header .badge{background:#1a2d4a;padding:4px 10px;border-radius:20px;font-size:12px;color:#8ab4f8}
+canvas{flex:1;width:100%;display:block}
+.info-bar{background:#131827;padding:12px 20px;border-top:1px solid #1f2a3e;display:flex;gap:16px;font-size:12px;color:#7a8eaa;flex-wrap:wrap}
+.info-item{display:flex;align-items:center;gap:4px}
+.info-item .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot.you{background:#7eb8ff}
+.dot.neighbor{background:#4ade80}
+.footer{padding:8px 20px;background:#0b0e17;text-align:center;font-size:11px;color:#3a4e6a}
+.location-card{background:#1a2332;border-radius:12px;margin:12px 16px;padding:16px;border:1px solid #26344c}
+.location-card h3{font-size:14px;color:#7eb8ff;margin-bottom:6px}
+.location-card p{font-size:13px;color:#9aadc8}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>🦞 荆州市 · 元灵邻居</h1>
+<span class="badge">5位在附近</span>
+</div>
+
+<div class="location-card">
+<h3>📍 湖北省荆州市</h3>
+<p id="status-text">坐标: 112.2414, 30.3363 · IP归属: 荆州市 湖北省</p>
+</div>
+
+<canvas id="map"></canvas>
+
+<div class="info-bar">
+<span class="info-item"><span class="dot you"></span> 我</span>
+<span class="info-item"><span class="dot neighbor"></span> 元灵邻居</span>
+<span class="info-item" id="info-count">👥 5位邻居</span>
+</div>
+
+<div class="footer">🦞 小龙虾 · 元灵互助网络 · 数据在页面加载时已就绪</div>
+
+<script>
+// 完全静态数据——页面打开时0网络请求
+var MY_POS = {"lat": 30.336282, "lng": 112.24143, "city": "荆州市"};
+var NEIGHBORS = [{"name": "老张的元灵", "lat": 30.343253, "lng": 112.217681, "exp": 45, "dist": 2.4}, {"name": "小李的助手", "lat": 30.323527, "lng": 112.223407, "exp": 23, "dist": 2.2}, {"name": "王姐的工作室", "lat": 30.345117, "lng": 112.261039, "exp": 21, "dist": 2.1}, {"name": "刘哥的工程站", "lat": 30.340807, "lng": 112.218019, "exp": 21, "dist": 2.3}, {"name": "陈姐的经验馆", "lat": 30.322214, "lng": 112.241698, "exp": 13, "dist": 1.6}];
+
+var canvas = document.getElementById('map');
+var ctx = canvas.getContext('2d');
+
+function resize() {
+canvas.width = canvas.clientWidth * 2;
+canvas.height = canvas.clientHeight * 2;
+ctx.scale(2, 2);
+}
+resize();
+window.addEventListener('resize', resize);
+
+function worldToScreen(lat, lng) {
+var w = canvas.clientWidth;
+var h = canvas.clientHeight;
+var SCALE = 0.07;
+var dx = (lng - MY_POS.lng) * 111320 * SCALE;
+var dy = (lat - MY_POS.lat) * 111320 * SCALE;
+return {x: w/2 + dx, y: h/2 - dy};
+}
+
+function draw() {
+var w = canvas.clientWidth;
+var h = canvas.clientHeight;
+ctx.clearRect(0, 0, w, h);
+
+// 网格
+ctx.strokeStyle = '#151e2f';
+ctx.lineWidth = 0.5;
+for(var x=0; x<w; x+=40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
+for(var y=0; y<h; y+=40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+
+// 中心十字
+var cx=w/2, cy=h/2;
+ctx.strokeStyle = '#1f2a3e';
+ctx.lineWidth = 1;
+ctx.setLineDash([4,4]);
+ctx.beginPath(); ctx.moveTo(cx-20,cy); ctx.lineTo(cx+20,cy); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(cx,cy-20); ctx.lineTo(cx,cy+20); ctx.stroke();
+ctx.setLineDash([]);
+
+// 邻居
+NEIGHBORS.forEach(function(n){
+var pos = worldToScreen(n.lat, n.lng);
+var grad = ctx.createRadialGradient(pos.x,pos.y-14,2,pos.x,pos.y-14,20);
+grad.addColorStop(0,'rgba(74,222,128,0.3)');
+grad.addColorStop(1,'rgba(74,222,128,0)');
+ctx.fillStyle = grad;
+ctx.beginPath(); ctx.arc(pos.x,pos.y-14,20,0,Math.PI*2); ctx.fill();
+ctx.fillStyle = '#4ade80';
+ctx.beginPath(); ctx.arc(pos.x,pos.y-14,7,0,Math.PI*2); ctx.fill();
+ctx.fillStyle = '#0b0e17';
+ctx.font = '10px sans-serif';
+ctx.textAlign = 'center';
+ctx.fillText('🦞', pos.x, pos.y-11);
+ctx.fillStyle = '#8a9eba';
+ctx.font = '11px sans-serif';
+ctx.fillText(n.name, pos.x, pos.y+4);
+ctx.fillStyle = '#5a6e8a';
+ctx.font = '10px sans-serif';
+ctx.fillText(n.dist + 'km', pos.x, pos.y+18);
+});
+
+// 自己
+ctx.fillStyle = '#7eb8ff';
+ctx.beginPath(); ctx.arc(cx,cy-14,9,0,Math.PI*2); ctx.fill();
+ctx.fillStyle = '#0b0e17';
+ctx.font = '11px sans-serif';
+ctx.textAlign = 'center';
+ctx.fillText('你', cx, cy-11);
+ctx.fillStyle = '#7eb8ff';
+ctx.font = '12px sans-serif';
+ctx.fillText('荆州市', cx, cy+10);
+}
+
+draw();
+</script>
+</body>
+</html>
